@@ -1,0 +1,89 @@
+Développement d'une plateforme permettant la réalisation de divers tests en ligne.
+(logique, mathématiques, QCM, ...)
+
+Les utilisateurs sont divisés en deux catégories :
+- Les utilisateurs qui conçoivent des tests.
+- Les utilisateurs qui les réalisent.
+
+User case typique
+-----------------
+
+Un utilisateur A crée un test sur la plateforme. (il s'agit d'un QCM par exemple)
+Un utilisateur B se connecte et s'inscrit pour passer le test. Il résout les différentes questions.
+La plateforme corrige automatiquement le test.
+Les résultats sont transmis aux utilisateurs A et B.
+
+
+Pages
+-----
+
+-> Accueil
+-> Inscription
+-> Connexion
+-> Page administration
+-> Page pour la création de tests
+-> Page de la liste des tests disponibles
+-> Page d'un test spécifique
+-> Panneau des résultats
+-> Page de messagerie
+
+Accueil
+-------
+
+Présentation sommaire de l'application.
+Liens vers page d'inscription et de connexion.
+
+Inscription
+-----------
+
+Formulaire permettant de s'inscrire : 
+			-- Nom d'utilisateur (unique)
+			-- Mot de passe (unique)
+			-- Addresse mail   -> Envoi d'un mail pour confirmer l'inscription. (unique)
+			-- Pseudo sur le site (unique)
+			-- Date de naissance
+			-- Niveau d'études
+			-- Nom
+			-- Prénom
+Lorsque l'inscription est terminée : connexion automatique + redirection vers la page "Panneau des résultats".
+
+Connexion
+---------
+
+Formulaire permettant la connexion.
+Si échouée : effacer les champs. Si réussie : redirection vers la page "Panneau des résultats".
+
+Page d'administration
+---------------------
+
+Réservée aux comptes administrateurs.
+Permet la création automatique ou manuelle de comptes.
+
+Page pour la création des tests
+-------------------------------
+
+Doit permettre de créer des tests.
+Soit des QCM, soit des questions libres, soit des questions sous forme d'animation.
+		-- Nom du test
+		-- L'organisation associée
+		-- Questions du test. -> Méthode d'auto-correction des questions.
+
+Page d'un test spécifique
+-------------------------
+
+Possibilité de répondre à chaque question du test et de soumettre ses réponses.
+Pour la personne qui a écrit le test : possibilité de voir une liste des résultats.
+Lors de la soumission des réponses, correction automatique + envoi du mail de résultats dans la page de messagerie de la personne
+ayant passé le test.
+
+Panneau des résultats
+---------------------
+
+Diverses statistiques sur les tests passés. (taux de réussite, nombre de tests passés, vues graphiques, ...)
+
+
+Page de messagerie
+------------------
+
+Une page dans laquelle des messages peuvent être reçus/envoyés. (notamment les résultats des tests)
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Projet-2{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'home' %}">Inscription</a></li>
+                <li><a href="{% url 'home' %}">Connexion</a></li>
+                <li><a href="{% url 'home' %}">Liste de test</a></li>
+                
+
+                
+            </ul>
+        </nav>
+    </header>
+
+    
+        {% block content %}
+        <!-- Le contenu spécifique à chaque page sera ici -->
+        {% endblock %}
+    
+
+    <footer>
+        <!-- Footer -->
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,68 @@
+/* Style pour le corps de la page */
+body {
+    background-color: #1a1a4f; /* Fond bleu marine */
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Cadre centré */
+.container {
+    background-color: #ffffff; /* Fond blanc du cadre */
+    width: 80%;
+    max-width: 1000px; /* Limite la largeur maximale */
+    margin: 80px auto; /* Centre le cadre horizontalement et ajoute un espace en haut */
+    padding: 40px;
+    border-radius: 10px; /* Bords arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre autour du cadre */
+}
+
+/* Style pour la barre de navigation */
+nav ul {
+    list-style: none;
+    display: flex; /* Aligne les éléments sur une ligne */
+    justify-content: flex-end; /* Aligne les liens à droite */
+    padding: 10px; /* Espace entre le bord de la page et les liens */
+    background-color: #d5d3d3; /* Couleur de fond de la barre */
+    margin: 0; /* Enlève les marges par défaut */
+    height: 20px; /* Définit une hauteur fixe pour la barre */
+    align-items: center; /* Centre les éléments verticalement */
+}
+
+nav ul li {
+    margin-left: 20px; /* Espace entre les liens */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333; /* Couleur du texte des liens */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    color: #007BFF; /* Couleur du lien au survol */
+}
+
+/* Style pour positionner la barre en haut à droite */
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%; /* Barre qui s'étend sur toute la largeur */
+    background-color: #f8f8f8;
+    z-index: 1000; /* Assure que la barre soit toujours au-dessus du contenu */
+    height: 20px; /* Fixe la même hauteur que la barre de navigation */
+}
+
+/* Style pour le titre */
+h1 {
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Effet de survol sur le cadre */
+.container:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
+}

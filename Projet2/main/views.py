@@ -27,3 +27,14 @@ def register(request):
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
+
+
+def profil(request):
+    #Vérification si l'utilisateur est connecté 
+    if not request.user.is_authenticated :
+        return render(request, 'home.html')
+    
+    user = request.user
+
+    return render(request, 'profil.html', {'user' : user})
+

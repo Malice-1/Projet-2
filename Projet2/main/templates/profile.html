@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Votre profil</h1>
+    <h2>Vos réservations</h2>
+    <ul>
+        {% for selection in selections %}
+            <li>{{ selection.movie_name }} - {{ selection.tickets }} billets pour {{ selection.time }} - {{ selection.total_price }} €</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

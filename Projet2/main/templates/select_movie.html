@@ -1,12 +1,31 @@
 {% extends 'base.html' %}
-{% block content %}
-<div class="container">
-<h1>Réservez vos billets de cinéma</h1>
 
-<form method="post">
+{% block content %}
+<h1 class="text-center mb-4">Réservez vos billets de cinéma</h1>
+
+<form method="post" class="row g-3">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Confirmer l'achat</button>
+    
+    <div class="col-md-6">
+        <label for="id_movie_name" class="form-label">Nom du film</label>
+        {{ form.movie_name }}
+    </div>
+    <div class="col-md-3">
+        <label for="id_tickets" class="form-label">Nombre de billets</label>
+        {{ form.tickets }}
+    </div>
+    <div class="col-md-3">
+        <label for="id_time" class="form-label">Horaire</label>
+        {{ form.time }}
+    </div>
+    <div class="col-md-12">
+        <label for="id_total_price" class="form-label">Prix total</label>
+        {{ form.total_price }}
+    </div>
+    
+    <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Confirmer l'achat</button>
+    </div>
 </form>
-</div>
 {% endblock %}
+

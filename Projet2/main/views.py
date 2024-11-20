@@ -49,10 +49,12 @@ def select_movie(request):
     if request.method == 'POST':
         form = MovieSelectionForm(request.POST)
         if form.is_valid():
-            selection = form.save(commit=False)
-            selection.user = request.user  # Associe l'utilisateur connecté
-            selection.save()
-            return redirect('profile')  # Redirige vers la page profil
+            movie_selection = form.save(commit=False)
+            movie = form.cleaned_data['movie_name']
+            movie_selection.user = request.user
+            movie_selection.ticket_price = movie.ticket_price  # Récupérer le prix du film
+            movie_selection.save()
+            return redirect('profile')
     else:
         form = MovieSelectionForm()
     return render(request, 'select_movie.html', {'form': form})

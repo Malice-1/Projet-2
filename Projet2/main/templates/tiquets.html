@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation de Billets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #2c2c2c; /* Couleur de fond sombre */
+            color: #f4f4f4; /* Texte clair pour le contraste */
+        }
+        #main-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        #movies-container {
+            width: 70%;
+        }
+        .movie {
+            width: 100%;
+            border: 1px solid #444; /* Bordure sombre mais visible */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #3a3a3a; /* Couleur de fond légèrement plus claire pour les cartes */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 70%;
+        }
+        .details h3 {
+            margin: 0 0 5px;
+            color: #ffffff; /* Titre en blanc */
+        }
+        .details .schedule {
+            font-size: 16px;
+            color: #dddddd; /* Couleur claire pour les horaires */
+            margin: 5px 0;
+        }
+        .details .schedule button {
+            background-color: #444; /* Boutons pour les horaires */
+            color: #ffffff;
+            border: 1px solid #555;
+            border-radius: 3px;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+        .details .schedule button.active {
+            background-color: #007bff; /* Couleur active pour le bouton */
+            color: #ffffff;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+        }
+        .price {
+            margin-right: 20px;
+            font-size: 16px;
+            color: #ffffff; /* Texte clair pour le prix */
+        }
+        .controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .controls button:disabled {
+            background-color: #555; /* Couleur désactivée pour les boutons */
+            cursor: not-allowed;
+        }
+        .controls input {
+            width: 40px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #555; /* Bordure sombre pour le champ */
+            border-radius: 3px;
+            margin: 0 5px;
+            background-color: #444; /* Fond du champ */
+            color: #ffffff; /* Texte clair dans le champ */
+        }
+        #summary {
+            width: 20%;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #3a3a3a;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #f4f4f4; /* Texte clair pour le résumé */
+        }
+        #summary h3 {
+            margin-bottom: 20px;
+            color: #ffffff; /* Titre en blanc */
+        }
+        .pay-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .pay-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Réservez vos billets de cinéma</h1>
+    <div id="main-container">
+        <div id="movies-container">
+            <!-- Les films seront générés ici -->
+        </div>
+        <div id="summary">
+            <h3>Total : <span id="total-price">0</span> €</h3>
+            <button class="pay-button" onclick="confirmerAchat()">Confirmer l'achat</button>
+        </div>
+    </div>
+
+    <script>
+        const MAX_TICKETS = 60; // Limite à 60 tickets
+        const movies = [
+            { 
+                name: "Chrono Pug: Le Carlin Voyageur", 
+                price: 10, 
+                schedule: ["17h", "19h", "21h"], 
+                description: "Un carlin voyage dans le temps pour sauver le monde.", 
+                selectedTime: null 
+            },
+            { 
+                name: "Rocky, le Rebelle de Stéphane", 
+                price: 12, 
+                schedule: ["16h", "18h", "20h"], 
+                description: "Un chien hors du commun bouleverse la vie d'un homme.", 
+                selectedTime: null 
+            },
+            { 
+                name: "Roku, Le Maître des Flammes", 
+                price: 9, 
+                schedule: ["15h", "17h", "19h"], 
+                description: "Roku, un lapin légendaire, maîtrise le feu pour protéger son royaume.", 
+                selectedTime: null 
+            },
+            { 
+                name: "Husky Samurai: Le Dernier Ronin", 
+                price: 11, 
+                schedule: ["14h", "16h", "18h"], 
+                description: "Un husky solitaire incarne l'honneur des samouraïs.", 
+                selectedTime: null 
+            },
+            { 
+                name: "L'ombre du Dragon", 
+                price: 10, 
+                schedule: ["13h", "15h", "17h"], 
+                description: "Un dragon légendaire menace une petite ville, et un héros se lève pour protéger les siens.", 
+                selectedTime: null 
+            },
+            { 
+                name: "Les Gardiens de Minuit", 
+                price: 12, 
+                schedule: ["20h", "22h", "00h"], 
+                description: "Une équipe de héros veille sur la ville pendant que tout le monde dort.", 
+                selectedTime: null 
+            },
+            { 
+                name: "Le Mystère de l'Éclipse", 
+                price: 10, 
+                schedule: ["14h", "16h", "18h"], 
+                description: "Un astronome découvre une étrange éclipse qui cache un grand secret.", 
+                selectedTime: null 
+            },
+            { 
+                name: "Survivants du Futur", 
+                price: 9, 
+                schedule: ["17h", "19h", "21h"], 
+                description: "Dans un monde post-apocalyptique, un groupe se bat pour survivre.", 
+                selectedTime: null 
+            },
+            { 
+                name: "L'Éveil des Ténèbres", 
+                price: 11, 
+                schedule: ["18h", "20h", "22h"], 
+                description: "Une ancienne force maléfique se réveille, menaçant l'existence.", 
+                selectedTime: null 
+            },
+            { 
+                name: "Le Voyage des Rêves", 
+                price: 10, 
+                schedule: ["13h", "15h", "17h"], 
+                description: "Un garçon découvre un monde fantastique en explorant ses rêves.", 
+                selectedTime: null 
+            }
+        ];
+
+        const container = document.getElementById('movies-container');
+        const totalPriceElement = document.getElementById('total-price');
+
+        movies.forEach((movie, index) => {
+            const movieDiv = document.createElement('div');
+            movieDiv.className = 'movie';
+            movieDiv.innerHTML = `
+                <div class="details">
+                    <h3>${movie.name}</h3>
+                    <div class="schedule">
+                        ${movie.schedule.map((time, i) => `
+                            <button onclick="selectTime(${index}, ${i})" id="time-${index}-${i}">
+                                ${time}
+                            </button>
+                        `).join("")}
+                    </div>
+                    <div class="description">${movie.description}</div>
+                </div>
+                <div class="controls">
+                    <span class="price">${movie.price} €</span>
+                    <button onclick="decrement(${index})" id="decrement-${index}" disabled>-</button>
+                    <input type="text" id="tickets-${index}" value="0" readonly>
+                    <button onclick="increment(${index})" id="increment-${index}">+</button>
+                </div>
+            `;
+            container.appendChild(movieDiv);
+        });
+
+        function selectTime(movieIndex, timeIndex) {
+            movies[movieIndex].selectedTime = movies[movieIndex].schedule[timeIndex];
+            document.querySelectorAll(`#time-${movieIndex}-0, #time-${movieIndex}-1, #time-${movieIndex}-2`).forEach(btn => btn.classList.remove("active"));
+            document.getElementById(`time-${movieIndex}-${timeIndex}`).classList.add("active");
+        }
+
+        function increment(index) {
+            const input = document.getElementById(`tickets-${index}`);
+            let currentValue = parseInt(input.value, 10);
+            if (currentValue < MAX_TICKETS) {
+                input.value = currentValue + 1;
+                document.getElementById(`decrement-${index}`).disabled = false;
+                if (currentValue + 1 === MAX_TICKETS) {
+                    document.getElementById(`increment-${index}`).disabled = true;
+                }
+                updateTotal();
+            }
+        }
+
+        function decrement(index) {
+            const input = document.getElementById(`tickets-${index}`);
+            let currentValue = parseInt(input.value, 10);
+            if (currentValue > 0) {
+                input.value = currentValue - 1;
+                document.getElementById(`increment-${index}`).disabled = false;
+                if (currentValue - 1 === 0) {
+                    document.getElementById(`decrement-${index}`).disabled = true;
+                }
+                updateTotal();
+            }
+        }
+
+        function updateTotal() {
+            let total = 0;
+            movies.forEach((movie, index) => {
+                const tickets = parseInt(document.getElementById(`tickets-${index}`).value, 10);
+                total += tickets * movie.price;
+            });
+            totalPriceElement.textContent = total;
+        }
+
+        function confirmerAchat() {
+            let total = 0;
+            let details = "";
+            for (let i = 0; i < movies.length; i++) {
+                const tickets = parseInt(document.getElementById(`tickets-${i}`).value, 10);
+                if (tickets > 0) {
+                    if (!movies[i].selectedTime) {
+                        alert(`Veuillez sélectionner un horaire pour ${movies[i].name}.`);
+                        return;
+                    }
+                    const time = movies[i].selectedTime;
+                    total += tickets * movies[i].price;
+                    details += `${tickets} billets pour ${movies[i].name} (${time}) - ${tickets * movies[i].price} €\n`;
+                }
+            }
+            if (total > 0) {
+                alert(`Détails de votre commande:\n${details}\nTotal: ${total} €`);
+            } else {
+                alert("Vous n'avez sélectionné aucun billet.");
+            }
+        }
+    </script>
+</body>
+</html>

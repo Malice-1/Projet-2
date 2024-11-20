@@ -12,6 +12,7 @@ def home(request):
 
 
 
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -27,3 +28,6 @@ def register(request):
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
+
+def tiquets(request):
+    return render(request, 'tiquets.html')

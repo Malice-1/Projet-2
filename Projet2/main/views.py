@@ -10,8 +10,8 @@ from .forms import MovieSelectionForm
 
 
 def home(request):
-    articles = Article.objects.all()
-    return render(request, 'home.html', {'articles': articles})
+    
+    return render(request, 'home.html')
 
 
 
